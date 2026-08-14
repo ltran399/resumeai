@@ -11,6 +11,18 @@ app = FastAPI()
 
 security = HTTPBearer()
 
+@app.get("/")
+def root():
+    return {"status": "ok"}
+
+
+@app.get("/health")
+def health(db: Session = Depends(get_db)):
+    try:
+        count = db.query(models.User).count()
+        return {"database": "connected", "users": count}
+    except Exception as e:
+        return {"database": "error", "detail": str(e)}
 
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
