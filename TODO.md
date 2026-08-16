@@ -1,0 +1,1 @@
+- [ ] Railway deployed /login returns 500 — local works, suspect missing SECRET_KEY in app service vars
